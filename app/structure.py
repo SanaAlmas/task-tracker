@@ -27,7 +27,7 @@ class Structure:
     def add(self, data):
         taskId = self.generate_task_id()
         task = Task(taskId, data)
-        self.tasks[str(task.get_task_id())] = task.to_dict()
+        self.tasks[task.get_task_id()] = task.to_dict()
         self.save(self.tasks)
 
     def update(self, data, new_status):

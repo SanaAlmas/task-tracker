@@ -27,8 +27,7 @@ class Task:
         self.status = Status.DONE
 
     def get_current_time(self):
-        now = datetime.now()
-        return now
+        return datetime.now().isoformat()
 
     def get_task_id(self):
         return self.taskId
