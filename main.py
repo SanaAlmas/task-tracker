@@ -26,7 +26,7 @@ def main():
         print('Task added')
 
     if args.update:
-        s.update(data=args.update[0], new_status=args.update[1])
+        s.update(taskid=args.update[0], new_status=args.update[1])
         print('Status updated')
 
     if args.delete:

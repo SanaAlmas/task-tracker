@@ -1,5 +1,7 @@
 import json
 import os
+from datetime import datetime
+
 from app.model import Task
 from app.status import Status
 
@@ -30,15 +32,17 @@ class Structure:
         self.tasks[task.get_task_id()] = task.to_dict()
         self.save(self.tasks)
 
-    def update(self, data, new_status):
+    def update(self, taskid, new_status):
         try:
             status_enum = new_status.replace(" ", "").upper()
             status_enum = Status[status_enum]
         except ValueError:
             return "Invalid status"
 
-        if data in self.tasks:
-            self.tasks[data] = status_enum.value
+        if taskid in self.tasks.keys():
+            tasks_dict = self.tasks[taskid]
+            tasks_dict['status'] = status_enum.value
+            tasks_dict['updated on'] = datetime.now().isoformat()
             self.save(self.tasks)
         else:
             return('Task not found')
