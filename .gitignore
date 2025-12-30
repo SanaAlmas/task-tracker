@@ -1,0 +1,7 @@
+# created by virtualenv automatically
+taskTracker/Lib
+venv/
+taskTracker/
+__pycache__/
+*.pyc
+

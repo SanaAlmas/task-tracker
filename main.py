@@ -1,5 +1,5 @@
 import argparse
-from structure import Structure
+from app.structure import Structure
 
 def main():
     s = Structure()
@@ -19,7 +19,7 @@ def main():
         choices=["all", "todo", "inprogress", "done"],
         help="Display tasks. Optional: all|todo|inprogress|done"
     )
-    args = parser.parse_args(['-s'])
+    args = parser.parse_args()
 
     if args.add:
         s.add(data = args.add[0])

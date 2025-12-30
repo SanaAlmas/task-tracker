@@ -1,7 +1,7 @@
 import json
 import os
-from model import Task
-from status import Status
+from app.model import Task
+from app.status import Status
 
 class Structure:
     def __init__(self):
@@ -19,9 +19,15 @@ class Structure:
         with open(self.filename, "w") as f:
             json.dump(task, f, indent=4)
 
+    def generate_task_id(self):
+        if not self.tasks:
+            return 1
+        return max(map(int, self.tasks.keys())) + 1
+
     def add(self, data):
-        task = Task(data)
-        self.tasks[task.get_task_data()] = task.get_status_data()
+        taskId = self.generate_task_id()
+        task = Task(taskId, data)
+        self.tasks[str(task.get_task_id())] = task.to_dict()
         self.save(self.tasks)
 
     def update(self, data, new_status):
