@@ -47,9 +47,9 @@ class Structure:
         else:
             return('Task not found')
 
-    def delete(self, data):
-        if data in self.tasks:
-            self.tasks.pop(data)
+    def delete(self, taskid):
+        if taskid in self.tasks.keys():
+            self.tasks.pop(taskid)
             self.save(self.tasks)
         else:
             return('Task not found')
