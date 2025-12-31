@@ -17,7 +17,6 @@ Tasks can have one of the following statuses:
 todo
 in progress
 done
-Internally, statuses are managed using a Python Enum to ensure consistency.
 
 Usage
 
@@ -30,17 +29,18 @@ Add a Task
 python main.py -a "Buy groceries"
 
 Update a Task Status
-python main.py -u "Buy groceries" inprogress
+python main.py -u "1" "inprogress"
 Valid statuses: todo, inprogress, done
+where "1" is the task id
 
 Delete a Task
-python main.py -d 'Buy groceries'
+python main.py -d '1'
 
 Show Tasks
 Show all tasks:
 python main.py -s
 
 Show only tasks with a specific status:
-python main.py -s todo
-python main.py -s inprogress
-python main.py -s done
+python main.py -s "todo"
+python main.py -s "inprogress"
+python main.py -s "done"
