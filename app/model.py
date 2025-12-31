@@ -1,20 +1,21 @@
 from datetime import datetime
 from app.status import Status
 
+
 class Task:
     def __init__(self, taskid, data):
         self.taskId = taskid
         self.task = data
-        self.status = Status.TODO
+        self.status = Status.TODO.value
         self.createdAt = self.get_current_time()
         self.updatedAt = self.get_current_time()
 
     def to_dict(self):
         return {
             "task": self.task,
-            "status": self.status.name,
+            "status": self.status,
             "created on": self.createdAt,
-            "updated on": self.updatedAt
+            "updated on": self.updatedAt,
         }
 
     def get_task_data(self):
@@ -31,4 +32,3 @@ class Task:
 
     def get_task_id(self):
         return self.taskId
-

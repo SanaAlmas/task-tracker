@@ -5,6 +5,7 @@ from datetime import datetime
 from app.model import Task
 from app.status import Status
 
+
 class Structure:
     def __init__(self):
         self.filename = "taskTracker.json"
@@ -17,7 +18,7 @@ class Structure:
         with open(self.filename, "r") as f:
             return json.load(f)
 
-    def save(self,task):
+    def save(self, task):
         with open(self.filename, "w") as f:
             json.dump(task, f, indent=4)
 
@@ -36,43 +37,42 @@ class Structure:
         try:
             status_enum = new_status.replace(" ", "").upper()
             status_enum = Status[status_enum]
-        except ValueError:
+        except (KeyError, ValueError):
             return "Invalid status"
+        if status_enum.value not in ("To Do", "In Progress", "Done"):
+            print("STATUS must be one of: todo, inprogress, done")
 
         if taskid in self.tasks.keys():
             tasks_dict = self.tasks[taskid]
-            tasks_dict['status'] = status_enum.value
-            tasks_dict['updated on'] = datetime.now().isoformat()
+            tasks_dict["status"] = status_enum.value
+            tasks_dict["updated on"] = datetime.now().isoformat()
             self.save(self.tasks)
         else:
-            return('Task not found')
+            return "Task not found"
 
     def delete(self, taskid):
         if taskid in self.tasks.keys():
             self.tasks.pop(taskid)
             self.save(self.tasks)
         else:
-            return('Task not found')
+            return "Task not found"
 
     def show(self, status):
         if not self.tasks:
             print("No tasks available.")
             return
-        if status == 'all':
-            for t,s in self.tasks.items():
+        if status == "all":
+            for t, s in self.tasks.items():
                 print(f"{t} -> {s}")
             return
         status_enum = status.replace(" ", "").upper()
-        status= Status[status_enum].value
+        status = Status[status_enum].value
         filtered = {}
-        for task,s in self.tasks.items():
-            if s == status:
-               filtered[task]=status
-            if not filtered:
-               print(f"No tasks with status '{status}'")
-            else:
-                for task, s in filtered.items():
-                    print(f"{task} -> {s}")
-
-
-
+        for task, s in self.tasks.items():
+            if s["status"] == status:
+                filtered[task] = s
+        if not filtered:
+            print(f"No tasks with status '{status}'")
+        else:
+            for task, s in filtered.items():
+                print(f"{task} -> {s}")
